@@ -4,7 +4,8 @@
   "description": "",
   "main": "boggle.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start": "node boggle.js"
   },
   "author": "Jordan M Scholten",
   "license": "ISC",
