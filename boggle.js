@@ -1,25 +1,32 @@
 #!/usr/bin/env node
 let program = require('commander');
+let chainFinder = require('./chainFinder.js');
 
 program
   .version('0.0.1')
   .command('mkboard')
+  // TODO: add option to designate board width
   // .option('-w, --width <n>', 'add the board width')
   .action((width) => {
     console.log('mkboard width %s', 3);
-    let randomInt = () => Math.floor(Math.random() * (3 + 1));
+    let randomInt = () => Math.floor(Math.random() * 9) + 1;
     let ints = [];
 
     for(let i = 0; i < (3 * 3); i++) {
       ints[i] = randomInt();
-      // if((3 - i) === 0) {
-      //   console.log(`${ints[i - 2]} ${ints[i - 1]} ${ints[i]}\n`);
-      // }
     }
     console.log(`
       ${ints[0]} ${ints[1]} ${ints[2]}\n
       ${ints[3]} ${ints[4]} ${ints[5]}\n
       ${ints[6]} ${ints[7]} ${ints[8]}`
+    );
+    console.log(
+      chainFinder.traverser([
+        [ints[0],ints[1],ints[2]],
+        [ints[3],ints[4],ints[5]],
+        [ints[6],ints[7],ints[8]]
+      ]
+      )
     );
   });
 
