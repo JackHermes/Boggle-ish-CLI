@@ -1,24 +1,22 @@
+// TODO having an issue of using paths multiple times when 0 is involved
+
 let traverser = (matrix) => {
-  let validChains = 'begin valid chains: ';
+  let validChains = [];
   // object to track visited cells
   let visited = {};
 
   // internal recursive function
   let finder = (x, y, workspace) => {
-    // declare workspace total as sum of wkspc items ----> TODO: make this an arg that's passed around - for complexities' sake!
+    // declare workspace total as sum of wkspc items ----> TODO: make this an arg that's passed around - for complexity's sake!
     let workspaceTotal = workspace.reduce((memo, value) => { return memo + value; }, 0)
     // check if x, y location has been a root/starting cell
-    // and propogate 'workspace'
-    if(visited['' + x + y] === 1) return workspace;
+    if(visited['' + x + y] === 1) return;
     // check if x, y location is off board or if workspace sum + current is greater than area
-    if(x < 0 || y < 0 || x >= 3 || y >= 3) return workspace;
+    if(x < 0 || y < 0 || x >= 3 || y >= 3) return;
 
 
     let current = matrix[x][y];
-    if((workspaceTotal + current) > 9) {
-      // if so, propogate workspace
-      return workspace;
-    }
+    if((workspaceTotal + current) > 9) return;
 
 
     // check if workspace sum + current is less or equal to area
@@ -40,17 +38,18 @@ let traverser = (matrix) => {
       if((workspaceTotal + current) === 9) {
         // if so, check if at least width - 1/ 2 integers in chain
         if(workspace.length >= 2) {
+
           // if so, send to valid chains variable (from external fn)
-          validChains = validChains.concat('\n' + workspace.join(' + ') + ' = 9');
+          validChains.push(workspace.slice().sort().join(' + ') + ' = 9');
         }
       }
       // unmark cell as temporarily visited
       visited['' + x + y] = 0;
-      // pop and return workspace to clear and propogate
+      // pop from workspace to clear
       workspace.pop();
-      return workspace;
+      return;
     }
-  }; // end 'finder'
+  }; // end 'finder' fn
 
   // loop over matrix
   for(let i = 0; i < matrix.length; i++) {
@@ -63,20 +62,19 @@ let traverser = (matrix) => {
       visited[cell] = 1;
     }
   }
-  return validChains;
+  return validChains; //.join(' \n ');
 };
 
-
-
-
-let grid = [
-  [1,2,3],
-  [4,5,6],
-  [7,8,9]
-]
-
-console.log(traverser(grid));
-  /*
-  I return workspace in many places in order to ensure I'm propogating the
-  value at certain times. Otherwise it's unnecessary and potentially confusing.
-  */
+module.exports = {
+  traverser
+}
+//
+//
+//
+// let grid = [
+//   [9,4,6],
+//   [8,1,0],
+//   [3,7,2]
+// ]
+//
+// console.log(traverser(grid));
