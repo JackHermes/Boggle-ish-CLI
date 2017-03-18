@@ -12,25 +12,24 @@ describe('Boggle', function() {
     });
   });
 });
-describe('chainFinder', function() {
-  describe('Integer Chains', function() {
-    let grid = [
-      [9,4,6],
-      [8,1,0],
-      [3,7,2]
-    ]
-    let chains = [
-      '0 + 1 + 8 = 9',
-      '1 + 8 = 9',
-      '0 + 1 + 2 + 6 = 9',
-      '0 + 2 + 7 = 9',
-      '2 + 7 = 9'
-    ]
-    it('should output correct paths', function() {
-      assert.sameDeepMembers(chains, chainFinder.traverser(grid));
-    });
-    it('shouldn\'t output duplicate correct paths', function() {
-      assert.deepEqual(chainFinder.traverser(grid), chains)
-    })
+
+describe('Found Integer Chains', function() {
+  let grid = [
+    [9,4,6],
+    [8,1,0],
+    [3,7,2]
+  ]
+  let chains = [
+    '0 + 1 + 8 = 9',
+    '1 + 8 = 9',
+    '0 + 1 + 2 + 6 = 9',
+    '0 + 2 + 7 = 9',
+    '2 + 7 = 9'
+  ]
+  it('should output correct paths', function() {
+    assert.sameDeepMembers(chains, chainFinder.traverser(grid));
   });
+  it('shouldn\'t output duplicate paths', function() {
+    assert.deepEqual(chainFinder.traverser(grid), chains)
+  })
 });

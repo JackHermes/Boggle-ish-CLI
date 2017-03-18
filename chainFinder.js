@@ -38,9 +38,11 @@ let traverser = (matrix) => {
       if((workspaceTotal + current) === 9) {
         // if so, check if at least width - 1/ 2 integers in chain
         if(workspace.length >= 2) {
-
-          // if so, send to valid chains variable (from external fn)
-          validChains.push(workspace.slice().sort().join(' + ') + ' = 9');
+          // check if string not present in validChains
+          if(validChains.indexOf(workspace.slice().sort().join(' + ') + ' = 9') === -1) {
+            // if not, send to valid chains variable (from external fn)
+            validChains.push(workspace.slice().sort().join(' + ') + ' = 9');
+          }
         }
       }
       // unmark cell as temporarily visited
@@ -68,7 +70,7 @@ let traverser = (matrix) => {
 module.exports = {
   traverser
 }
-//
+// 
 //
 //
 // let grid = [
