@@ -1,5 +1,5 @@
 let traverser = (matrix) => {
-  let validChains = '';
+  let validChains = 'begin valid chains: ';
   // object to track visited cells
   let visited = {};
 
@@ -9,7 +9,7 @@ let traverser = (matrix) => {
     let workspaceTotal = workspace.reduce((memo, value) => { return memo + value; }, 0)
     // check if x, y location has been a root/starting cell
     // and propogate 'workspace'
-    if(visited['' + x + y]) return workspace;
+    if(visited['' + x + y] === 1) return workspace;
     // check if x, y location is off board or if workspace sum + current is greater than area
     if(x < 0 || y < 0 || x >= 3 || y >= 3) return workspace;
 
@@ -23,6 +23,8 @@ let traverser = (matrix) => {
 
     // check if workspace sum + current is less or equal to area
     if((workspaceTotal + current) <= 9) {
+      // Mark cell temporarily visited until finished recursing
+      visited['' + x + y] = 1;
       // if so, push current to workspace
       workspace.push(current);
       // recurse all 8 directions (if already equal, we're checking for zeroes)
@@ -42,6 +44,8 @@ let traverser = (matrix) => {
           validChains = validChains.concat('\n' + workspace.join(' + ') + ' = 9');
         }
       }
+      // unmark cell as temporarily visited
+      visited['' + x + y] = 0;
       // pop and return workspace to clear and propogate
       workspace.pop();
       return workspace;
@@ -54,7 +58,7 @@ let traverser = (matrix) => {
       console.log("iteration # " + i + j);
       // finds all chains with a root of this cell
       finder(j, i, []);
-      // mark cell as visited - marking here will make sure there won't be duplicate chains
+      // mark cell as visited - marking here will make sure there won't be duplicate, reversed chains
       let cell = '' + j + i;
       visited[cell] = 1;
     }
