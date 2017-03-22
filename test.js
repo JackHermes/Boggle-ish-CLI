@@ -27,9 +27,9 @@ describe('Found Integer Chains', function() {
     '2 + 7 = 9'
   ]
   it('should output correct paths', function() {
-    assert.sameDeepMembers(chains, chainFinder.traverser(grid));
+    assert.sameDeepMembers(chains, chainFinder.traverser(grid, 3, 9));
   });
   it('shouldn\'t output duplicate paths', function() {
-    assert.deepEqual(chainFinder.traverser(grid), chains)
+    assert.deepEqual(chainFinder.traverser(grid, 3, 9), chains)
   })
 });

@@ -1,4 +1,4 @@
-let traverser = (matrix) => {
+let traverser = (matrix, width, area) => {
   let validChains = [];
   // object to track visited cells
   let visited = {};
@@ -10,15 +10,15 @@ let traverser = (matrix) => {
     // check if x, y location has been a root/starting cell
     if(visited['' + x + y] === 1) return;
     // check if x, y location is off board or if workspace total + current is greater than area
-    if(x < 0 || y < 0 || x >= 3 || y >= 3) return;
+    if(x < 0 || y < 0 || x >= width || y >= width) return;
 
 
     let current = matrix[x][y];
-    if((workspaceTotal + current) > 9) return;
+    if((workspaceTotal + current) > area) return;
 
 
     // check if workspace sum + current is less or equal to area
-    if((workspaceTotal + current) <= 9) {
+    if((workspaceTotal + current) <= area) {
       // Mark cell temporarily visited until finished recursing
       visited['' + x + y] = 1;
       // if so, push current to workspace
@@ -33,13 +33,13 @@ let traverser = (matrix) => {
       finder(x + 1, y + 1, workspace);
       finder(x + 1, y - 1, workspace);
       // check if sum of ints equal to area
-      if((workspaceTotal + current) === 9) {
+      if((workspaceTotal + current) === area) {
         // if so, check if at least 2 (width - 1) integers in chain
         if(workspace.length >= 2) {
           // check if string not present in validChains
-          if(validChains.indexOf(workspace.slice().sort().join(' + ') + ' = 9') === -1) {
+          if(validChains.indexOf(workspace.slice().sort().join(' + ') + ` = ${area}`) === -1) {
             // if not, send to valid chains variable (from external fn)
-            validChains.push(workspace.slice().sort().join(' + ') + ' = 9');
+            validChains.push(workspace.slice().sort().join(' + ') + ` = ${area}`);
           }
         }
       }
